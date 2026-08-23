@@ -1,0 +1,38 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# System / IDE files
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Superpowers files
+.superpowers/
+superpowers-src/
+
+# OS files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Python / FastAPI
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.env
+.venv
+env/
+venv/
+pip-log.txt
+pip-delete-this-directory.txt
+
+# React / build
+dist/
+build/
+.eslintcache
