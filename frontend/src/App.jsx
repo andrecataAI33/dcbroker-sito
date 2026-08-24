@@ -1,14 +1,103 @@
 import React, { useState, useEffect } from 'react'
 
+// Custom Inline SVG Icons for professional styling
+const ShieldIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  </svg>
+)
+
+const BriefcaseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+  </svg>
+)
+
+const ScaleIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v20M2 18h20M4 6l8 12 8-12"/>
+  </svg>
+)
+
+const TrendingUpIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+    <polyline points="17 6 23 6 23 12"/>
+  </svg>
+)
+
+const SunIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <circle cx="12" cy="12" r="5"/>
+    <line x1="12" y1="1" x2="12" y2="3"/>
+    <line x1="12" y1="21" x2="12" y2="23"/>
+    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+    <line x1="1" y1="12" x2="3" y2="12"/>
+    <line x1="21" y1="12" x2="23" y2="12"/>
+    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+  </svg>
+)
+
+const ActivityIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+  </svg>
+)
+
+const HeartIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+  </svg>
+)
+
+const HomeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+    <polyline points="9 22 9 12 15 12 15 22"/>
+  </svg>
+)
+
+const PlaneIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+  </svg>
+)
+
+const ToolIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+  </svg>
+)
+
+const CarIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="1" y="3" width="22" height="13" rx="2" ry="2"/>
+    <polyline points="22 21 2 21"/>
+    <path d="M5 16v4M19 16v4"/>
+  </svg>
+)
+
+const TruckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <rect x="1" y="3" width="15" height="13"/>
+    <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+    <circle cx="5.5" cy="18.5" r="2.5"/>
+    <circle cx="18.5" cy="18.5" r="2.5"/>
+  </svg>
+)
+
 function App() {
-  const [activeTab, setActiveTab] = useState('home') // home | chisiamo | aziende | privati | automotive | contatti | reclami | portal
+  const [activeTab, setActiveTab] = useState('home')
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [userEmail, setUserEmail] = useState('')
   const [policies, setPolicies] = useState([])
   const [loadingPolicies, setLoadingPolicies] = useState(false)
 
   // Wizard state (Aziende - CyberRisk)
-  const [wizardStep, setWizardStep] = useState(1) // 1 = main grid, 2 = wizard form, 3 = quote result
+  const [wizardStep, setWizardStep] = useState(1)
   const [companyName, setCompanyName] = useState('')
   const [industry, setIndustry] = useState('Servizi')
   const [turnover, setTurnover] = useState(250000)
@@ -43,7 +132,6 @@ function App() {
         })
         .catch(err => {
           console.error(err)
-          // Fallback static mock
           setPolicies([
             { id: 1, title: 'Polizza CyberRisk PMI', premium: 450.0, status: 'Attiva', created_at: '2026-08-23' },
             { id: 2, title: 'Polizza D&O Amministratori', premium: 800.0, status: 'Attiva', created_at: '2026-08-23' }
@@ -53,7 +141,6 @@ function App() {
     }
   }, [isLoggedIn, activeTab])
 
-  // Handle Google Login Simulation (Clerk mock)
   const handleGoogleLogin = () => {
     setUserEmail('azienda.cliente@gmail.com')
     setIsLoggedIn(true)
@@ -64,7 +151,6 @@ function App() {
     setUserEmail('')
   }
 
-  // Handle Quote Calculation
   const handleCalculateQuote = (e) => {
     e.preventDefault()
     setCalculating(true)
@@ -95,7 +181,6 @@ function App() {
       })
       .catch(err => {
         console.error(err)
-        // Fallback calculations
         let base = 300.0
         if (turnover > 10000000) base = 2500.0
         else if (turnover > 2500000) base = 1200.0
@@ -124,7 +209,6 @@ function App() {
       })
   }
 
-  // Handle Contact Form Submission
   const handleContactSubmit = (e) => {
     e.preventDefault()
     setContactSubmitting(true)
@@ -156,7 +240,6 @@ function App() {
       })
       .catch(err => {
         console.error(err)
-        // Fallback success
         setContactSuccess(true)
         setContactSubmitting(false)
       })
@@ -187,60 +270,66 @@ function App() {
         {activeTab === 'home' && (
           <div>
             <div class="hero">
-              <h1>Crea il tuo futuro con: <span>DC Broker</span></h1>
+              <h1>Crea il tuo futuro con: <br /><span>DC Broker</span></h1>
               <p>Siamo la migliore soluzione possibile per lo sviluppo del tuo business o per le tue necessità personali in considerazione dell'esperienza maturata in questi anni.</p>
               <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
                 <button class="btn-primary" onClick={() => setActiveTab('portal')}>LE TUE POLIZZE</button>
-                <button class="btn-primary" style={{ background: '#ffffff', color: '#333333' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+                <button class="btn-secondary" onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
             </div>
 
             {/* Soluzioni Assicurative per Aziende e Privati Section */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem', margin: '4rem 0', alignItems: 'center', background: '#ffffff', padding: '3rem', borderRadius: '12px', border: '1px solid var(--border)' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.1fr', gap: '3rem', margin: '4rem 0', alignItems: 'center', background: '#ffffff', padding: '3rem', borderRadius: '16px', border: '1px solid var(--border)' }}>
               <div>
-                <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem', fontWeight: '800' }}>Soluzioni assicurative per Aziende e Privati.</h2>
+                <h2 style={{ fontSize: '2.2rem', marginBottom: '1.5rem', fontWeight: '800', lineHeight: '1.3' }}>Soluzioni assicurative per Aziende e Privati.</h2>
                 <p style={{ color: 'var(--gray)', fontSize: '1.05rem', lineHeight: '1.8', marginBottom: '2rem' }}>
                   <strong>Crea il tuo futuro con: DC Broker</strong> Siamo nati da una sfida; quella di offrire ai nostri clienti un servizio migliore di quello ricevuto prima. Siamo un broker assicurativo con esperienza ventennale che opera sul territorio nazionale ed in quanto tali cerchiamo ogni giorno grazie ad un team di professionisti, la migliore soluzione possibile pensata su misura per i nostri clienti sia retail che corporate.
                 </p>
                 <button class="btn-primary" onClick={() => setActiveTab('chisiamo')}>LEGGI DI PIÙ</button>
-                <div style={{ marginTop: '2rem', fontStyle: 'italic', fontSize: '1.2rem', fontFamily: 'Georgia, serif' }}>
+                <div style={{ marginTop: '2.5rem', fontStyle: 'italic', fontSize: '1.2rem', fontFamily: 'Georgia, serif' }}>
                   Daniele Carrella
                   <div style={{ fontSize: '0.85rem', color: 'var(--gray)', fontStyle: 'normal', fontFamily: 'sans-serif', marginTop: '0.3rem' }}>CEO di DC Broker srl</div>
                 </div>
               </div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=300&q=80" alt="Consulting" style={{ width: '100%', borderRadius: '8px' }} />
-                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=300&q=80" alt="Growth chart" style={{ width: '100%', borderRadius: '8px' }} />
-                <img src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=300&q=80" alt="Team meeting" style={{ width: '100%', borderRadius: '8px' }} />
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Colleagues" style={{ width: '100%', borderRadius: '8px' }} />
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.2rem' }}>
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=300&q=80" alt="Consulting" style={{ width: '100%', borderRadius: '12px' }} />
+                <img src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=300&q=80" alt="Growth chart" style={{ width: '100%', borderRadius: '12px' }} />
+                <img src="https://images.unsplash.com/photo-1542744094-3a31f103e35f?auto=format&fit=crop&w=300&q=80" alt="Team meeting" style={{ width: '100%', borderRadius: '12px' }} />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=300&q=80" alt="Colleagues" style={{ width: '100%', borderRadius: '12px' }} />
               </div>
             </div>
 
             {/* Il Potere Assicurativo Nelle Tue Mani */}
             <div style={{ textAlign: 'center', margin: '4rem 0' }}>
-              <h2 style={{ fontSize: '2rem', marginBottom: '1rem', fontWeight: '800' }}>Il potere assicurativo nelle tue mani</h2>
-              <p style={{ color: 'var(--gray)', maxWidth: '800px', margin: '0 auto 3rem auto' }}>
+              <h2 class="section-title">Il potere assicurativo nelle tue mani</h2>
+              <p style={{ color: 'var(--gray)', maxWidth: '800px', margin: '0 auto 3rem auto', fontSize: '1.1rem' }}>
                 Con DC Broker hai un ventaglio assicurativo completo, scopri i nostri servizi per proteggere e tenere al sicuro dai rischi le cose più importanti per te sia nel privato che nel mondo lavorativo.
               </p>
 
               <div class="grid">
                 <div class="card" onClick={() => setActiveTab('aziende')}>
-                  <div class="card-icon">💼</div>
-                  <h3>Aziende</h3>
-                  <p>DC Broker è specializzato nella consulenza e nella gestione dei rischi per le Imprese.</p>
-                  <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>INFO</button>
+                  <div class="card-body">
+                    <div class="card-icon-box"><BriefcaseIcon /></div>
+                    <h3>Aziende</h3>
+                    <p>DC Broker è specializzato nella consulenza e nella gestione dei rischi per le Imprese.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }}>INFO</button>
                 </div>
                 <div class="card" onClick={() => setActiveTab('automotive')}>
-                  <div class="card-icon">🚗</div>
-                  <h3>Automotive</h3>
-                  <p>I migliori servizi a tutela del patrimonio di chi utilizza, progetta, costruisce e vende veicoli.</p>
-                  <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>INFO</button>
+                  <div class="card-body">
+                    <div class="card-icon-box"><CarIcon /></div>
+                    <h3>Automotive</h3>
+                    <p>I migliori servizi a tutela del patrimonio di chi utilizza, progetta, costruisce e vende veicoli.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }}>INFO</button>
                 </div>
                 <div class="card" onClick={() => setActiveTab('privati')}>
-                  <div class="card-icon">👤</div>
-                  <h3>Persona</h3>
-                  <p>Tu e la tua Famiglia siete unici, interessi e passioni e tante diverse necessità.</p>
-                  <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>INFO</button>
+                  <div class="card-body">
+                    <div class="card-icon-box"><HeartIcon /></div>
+                    <h3>Persona</h3>
+                    <p>Tu e la tua Famiglia siete unici, interessi e passioni e tante diverse necessità.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }}>INFO</button>
                 </div>
               </div>
             </div>
@@ -248,22 +337,28 @@ function App() {
             {/* Other services grid (Instant, Credit, Service) */}
             <div class="grid">
               <div class="card">
-                <div class="card-icon">⚡</div>
-                <h3>Instant Insurance</h3>
-                <p>Sono attivibili in pochi passaggi direttamente dallo smartphone, l'instant insurance è pensata per coprire eventi o situazioni particolari e di breve durata.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+                <div class="card-body">
+                  <div class="card-icon-box"><ActivityIcon /></div>
+                  <h3>Instant Insurance</h3>
+                  <p>Sono attivibili in pochi passaggi direttamente dallo smartphone, l'instant insurance è pensata per coprire eventi o situazioni particolari e di breve durata.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
               <div class="card">
-                <div class="card-icon">💳</div>
-                <h3>Credit Insurance</h3>
-                <p>L'Assicurazione del Credito aiuta le aziende a salvaguardarsi da eventuali mancati pagamenti da parte di clienti, in Italia o all'estero. Informati presso la nostra assicurazione.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+                <div class="card-body">
+                  <div class="card-icon-box"><TrendingUpIcon /></div>
+                  <h3>Credit Insurance</h3>
+                  <p>L'Assicurazione del Credito aiuta le aziende a salvaguardarsi da eventuali mancati pagamenti da parte di clienti, in Italia o all'estero. Informati presso la nostra assicurazione.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
               <div class="card">
-                <div class="card-icon">🛠️</div>
-                <h3>Service Insurance</h3>
-                <p>Siamo presenti sul territorio per esserti ancora più vicini, sempre pronti a supportarti quando ne hai bisogno. Il nostro pool di esperti è a tua disposizione.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+                <div class="card-body">
+                  <div class="card-icon-box"><ToolIcon /></div>
+                  <h3>Service Insurance</h3>
+                  <p>Siamo presenti sul territorio per esserti ancora più vicini, sempre pronti a supportarti quando ne hai bisogno. Il nostro pool di esperti è a tua disposizione.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
             </div>
 
@@ -287,12 +382,12 @@ function App() {
 
         {/* TAB: CHI SIAMO */}
         {activeTab === 'chisiamo' && (
-          <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '10px', padding: '3rem', margin: '2rem 0' }}>
-            <h2 style={{ fontSize: '2rem', marginBottom: '1.5rem' }}>Chi Siamo - DC Broker</h2>
+          <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '16px', padding: '3rem', margin: '2rem 0' }}>
+            <h2 style={{ fontSize: '2.2rem', marginBottom: '1.5rem', fontWeight: '800' }}>Chi Siamo - DC Broker</h2>
             
             <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '3rem', alignItems: 'center' }}>
               <div>
-                <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', color: 'var(--primary)' }}>Nasce da un'idea di Daniele Carrella per diventare un partner assicurativo affidabile.</h3>
+                <h3 style={{ fontSize: '1.6rem', marginBottom: '1.2rem', color: 'var(--primary)', fontWeight: '800' }}>Nasce da un'idea di Daniele Carrella per diventare un partner assicurativo affidabile.</h3>
                 <p style={{ fontSize: '1.1rem', color: 'var(--gray)', marginBottom: '1.5rem', lineHeight: '1.8' }}>
                   DC Broker nasce nel 1990 e si specializza nell'offerta ai segmenti Privati ed Aziende. I prodotti assicurativi che vengono proposti sono innovativi e vincenti.
                 </p>
@@ -301,7 +396,7 @@ function App() {
                 </p>
               </div>
               <div>
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=450&q=80" alt="Team DC Broker" style={{ width: '100%', borderRadius: '10px', boxShadow: '0 8px 20px rgba(0,0,0,0.1)' }} />
+                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=450&q=80" alt="Team DC Broker" style={{ width: '100%', borderRadius: '12px', boxShadow: '0 8px 20px rgba(0,0,0,0.05)' }} />
               </div>
             </div>
 
@@ -331,59 +426,77 @@ function App() {
               <div>
                 <h2 class="section-title">Le nostre soluzioni per le Imprese</h2>
                 <div class="grid">
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">💼</div>
-                    <h3>RC Professionale</h3>
-                    <p>Anche tu, come tutti i professionisti hai necessità di lavorare senza pensieri. DC Broker è specializzata nell'offrirti la protezione di cui hai bisogno.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><BriefcaseIcon /></div>
+                      <h3>RC Professionale</h3>
+                      <p>Anche tu, come tutti i professionisti hai necessità di lavorare senza pensieri. DC Broker è specializzata nell'offrirti la protezione di cui hai bisogno.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">⚖️</div>
-                    <h3>Tutela Legale</h3>
-                    <p>La polizza copre le spese di difesa degli interessi di un'azienda, in caso di controversie penali e civili, sia in ambito stragiudiziale che in tribunale.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><ScaleIcon /></div>
+                      <h3>Tutela Legale</h3>
+                      <p>La polizza copre le spese di difesa degli interessi di un'azienda, in caso di controversie penali e civili, sia in ambito stragiudiziale che in tribunale.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">📊</div>
-                    <h3>Assicurazione del credito</h3>
-                    <p>L'Assicurazione del Credito aiuta le aziende a salvaguardarsi da eventuali mancati pagamenti da parte di clienti, in Italia o all'estero.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><TrendingUpIcon /></div>
+                      <h3>Assicurazione del credito</h3>
+                      <p>L'Assicurazione del Credito aiuta le aziende a salvaguardarsi da eventuali mancati pagamenti da parte di clienti, in Italia o all'estero.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">☀️</div>
-                    <h3>Energy</h3>
-                    <p>DC Broker tramite il proprio Team di esperti in assicurazioni energetiche riesce a supportarti nel cautelarti e minimizzare i rischi nel settore.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><SunIcon /></div>
+                      <h3>Energy</h3>
+                      <p>DC Broker tramite il proprio Team di esperti in assicurazioni energetiche riesce a supportarti nel cautelarti e minimizzare i rischi nel settore.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setWizardStep(2)}>
-                    <div class="card-icon">🛡️</div>
-                    <h3>Polizza CyberRisk</h3>
-                    <p>Proteggi la tua azienda contro il crimine informatico e le minacce digitali, DC Broker ti propone diverse soluzioni complete e completamente personalizzabili.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>PREVENTIVATORE RAPIDO</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><ShieldIcon /></div>
+                      <h3>Polizza CyberRisk</h3>
+                      <p>Proteggi la tua azienda contro il crimine informatico e le minacce digitali, DC Broker ti propone diverse soluzioni complete e completamente personalizzabili.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setWizardStep(2)}>PREVENTIVATORE RAPIDO</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">🌐</div>
-                    <h3>All Risk Insurance</h3>
-                    <p>Con DC Broker puoi stipulare un'assicurazione All Risks, con estensione alla copertura assicurativa per i danni da interruzione dell'attività.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><ActivityIcon /></div>
+                      <h3>All Risk Insurance</h3>
+                      <p>Con DC Broker puoi stipulare un'assicurazione All Risks, con estensione alla copertura assicurativa per i danni da interruzione dell'attività.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">🤝</div>
-                    <h3>Polizze M &amp; A</h3>
-                    <p>DC Broker tramite un team di esperti ti guida e ti fornisce soluzioni e strategie integrate per la gestione del rischio aziendale durante fusioni e acquisizioni.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><BriefcaseIcon /></div>
+                      <h3>Polizze M &amp; A</h3>
+                      <p>DC Broker tramite un team di esperti ti guida e ti fornisce soluzioni e strategie integrate per la gestione del rischio aziendale durante fusioni e acquisizioni.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">📃</div>
-                    <h3>Cauzioni e Fideiussioni</h3>
-                    <p>DC Broker ha le competenze necessarie per aiutare la tua azienda verso l'apertura a nuovi mercati dove esiste la necessità del rilascio di garanzie fidejussorie e creditizie.</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><ScaleIcon /></div>
+                      <h3>Cauzioni e Fideiussioni</h3>
+                      <p>DC Broker ha le competenze necessarie per aiutare la tua azienda verso l'apertura a nuovi mercati dove existe la necessità del rilascio di garanzie fidejussorie e creditizie.</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
-                  <div class="card" onClick={() => setActiveTab('contatti')}>
-                    <div class="card-icon">👔</div>
-                    <h3>Polizza D &amp; O</h3>
-                    <p>Sei un Amministratore, i Sindaco, Dirigenti di Società? Scegli la Polizza di Responsabilità Civile che assicura le aziende nel gestire al meglio situazioni di rischio</p>
-                    <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="card-icon-box"><BriefcaseIcon /></div>
+                      <h3>Polizza D &amp; O</h3>
+                      <p>Sei un Amministratore, i Sindaco, Dirigenti di Società? Scegli la Polizza di Responsabilità Civile che assicura le aziende nel gestire al meglio situazioni di rischio</p>
+                    </div>
+                    <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
                 </div>
               </div>
@@ -496,41 +609,53 @@ function App() {
 
             <h2 class="section-title">Soluzioni per Persona e Famiglia</h2>
             <div class="grid">
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">❤️</div>
-                <h3>Polizza Vita</h3>
-                <p>L'assicurazione vita garantisce un sostegno economico in caso di morte o infortunio grave di un membro della propria famiglia. Chiedi un preventivo personalizzato</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><HeartIcon /></div>
+                  <h3>Polizza Vita</h3>
+                  <p>L'assicurazione vita garantisce un sostegno economico in caso di morte o infortunio grave di un membro della propria famiglia. Chiedi un preventivo personalizzato</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🏥</div>
-                <h3>Rimborso spese mediche</h3>
-                <p>L'assicurazione rimborso spese mediche, è una polizza che permette di tutelare la propria salute in relazione a patologie sopraggiunte nelle più svariate situazioni</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><ActivityIcon /></div>
+                  <h3>Rimborso spese mediche</h3>
+                  <p>L'assicurazione rimborso spese mediche, è una polizza che permette di tutelare la propria salute in relazione a patologie sopraggiunte nelle più svariate situazioni</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">👴</div>
-                <h3>Long Term Care</h3>
-                <p>DC Broker ti propone Assicurazione contro il rischio di non autosufficienza a seguito di infortunio, malattia grave o longevità. Richiedi un preventivo.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><ScaleIcon /></div>
+                  <h3>Long Term Care</h3>
+                  <p>DC Broker ti propone Assicurazione contro il rischio di non autosufficienza a seguito di infortunio, malattia grave o longevità. Richiedi un preventivo.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🩹</div>
-                <h3>Polizza Infortuni</h3>
-                <p>La polizza infortuni ha lo scopo di proteggere economicamente la famiglia dagli incidenti più gravi, che potrebbero minare la tranquillità familiare.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><ActivityIcon /></div>
+                  <h3>Polizza Infortuni</h3>
+                  <p>La polizza infortuni ha lo scopo di proteggere economicamente la famiglia dagli incidenti più gravi, che potrebbero minare la tranquillità familiare.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🏠</div>
-                <h3>Polizza Abitazione</h3>
-                <p>La polizza Globale Abitazione di DC Broker ti offre una protezione completa per la tua casa ed alla tua Famiglia con un insieme di garanzie e tutele.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><HomeIcon /></div>
+                  <h3>Polizza Abitazione</h3>
+                  <p>La polizza Globale Abitazione di DC Broker ti offre una protezione completa per la tua casa ed alla tua Famiglia con un insieme di garanzie e tutele.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">✈️</div>
-                <h3>Polizza Viaggi</h3>
-                <p>Indispensabile a chi ha intenzione di raggiungere Paesi molto lontani o a rischio o destinazioni dove le spese sanitarie per eventuali cure mediche, sono molto elevate.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><PlaneIcon /></div>
+                  <h3>Polizza Viaggi</h3>
+                  <p>Indispensabile a chi ha intenzione di raggiungere Paesi molto lontani o a rischio o destinazioni dove le spese sanitarie per eventuali cure mediche, sono molto elevate.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
             </div>
           </div>
@@ -547,23 +672,29 @@ function App() {
 
             <h2 class="section-title">Coperture Settore Automotive</h2>
             <div class="grid">
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🏍️</div>
-                <h3>Assicurazioni Auto e Moto</h3>
-                <p>Scopri le polizze per la tua auto e la tua moto e le combinazioni di servizi che fanno al caso tuo.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>INFO</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><CarIcon /></div>
+                  <h3>Assicurazioni Auto e Moto</h3>
+                  <p>Scopri le polizze per la tua auto e la tua moto e le combinazioni di servizi che fanno al caso tuo.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>INFO</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🚚</div>
-                <h3>Assicurazioni Flotte Aziendali</h3>
-                <p>Proteggi la tua flotta aziendale con le soluzioni assicurative complete di DC Broker</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>CONTATTACI</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><TruckIcon /></div>
+                  <h3>Assicurazioni Flotte Aziendali</h3>
+                  <p>Proteggi la tua flotta aziendale con le soluzioni assicurative complete di DC Broker</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
               </div>
-              <div class="card" onClick={() => setActiveTab('contatti')}>
-                <div class="card-icon">🏢</div>
-                <h3>Progetto Car Dealer</h3>
-                <p>DC BROKER INSURANCE, il brand nato per sviluppare il modello distributivo innovativo dedicato al settore Car Dealer.</p>
-                <button class="btn-primary" style={{ marginTop: '1.5rem', width: '100%', padding: '0.6rem' }}>INFO</button>
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-icon-box"><HomeIcon /></div>
+                  <h3>Progetto Car Dealer</h3>
+                  <p>DC BROKER INSURANCE, il brand nato per sviluppare il modello distributivo innovativo dedicato al settore Car Dealer.</p>
+                </div>
+                <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>INFO</button>
               </div>
             </div>
           </div>
@@ -580,7 +711,7 @@ function App() {
                 <p>Per richieste commerciali, check-up di polizze in corso o appuntamenti fisici/digitali.</p>
                 
                 <div class="info-item">
-                  <span class="info-icon">📍</span>
+                  <div class="info-icon-box">📍</div>
                   <div>
                     <strong>Sede Operativa</strong>
                     <p>Via Roma, 100 - Milano (MI)</p>
@@ -588,7 +719,7 @@ function App() {
                 </div>
 
                 <div class="info-item">
-                  <span class="info-icon">📞</span>
+                  <div class="info-icon-box">📞</div>
                   <div>
                     <strong>Telefono</strong>
                     <p>+39 02 12345678</p>
@@ -596,7 +727,7 @@ function App() {
                 </div>
 
                 <div class="info-item">
-                  <span class="info-icon">✉️</span>
+                  <div class="info-icon-box">✉️</div>
                   <div>
                     <strong>Email</strong>
                     <p>info@dcbroker.it</p>
@@ -648,7 +779,7 @@ function App() {
 
         {/* TAB: RECLAMI */}
         {activeTab === 'reclami' && (
-          <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '10px', padding: '3rem', margin: '2rem 0' }}>
+          <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '16px', padding: '3rem', margin: '2rem 0' }}>
             <h2 style={{ fontSize: '2.2rem', marginBottom: '1.5rem', color: 'var(--dark)' }}>Recalmi</h2>
             <div style={{ fontSize: '1.05rem', color: 'var(--gray)', lineHeight: '1.8' }}>
               <p style={{ marginBottom: '1.5rem' }}>
