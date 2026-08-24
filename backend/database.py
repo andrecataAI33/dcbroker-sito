@@ -44,6 +44,18 @@ class QuoteRequest(Base):
     calculated_premium = Column(Float, nullable=False)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
+class ContactRequest(Base):
+    __tablename__ = "contact_requests"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    email = Column(String, nullable=False)
+    phone = Column(String, nullable=True)
+    subject = Column(String, nullable=False)
+    message = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
+
 def init_db():
     Base.metadata.create_all(bind=engine)
 

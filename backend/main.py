@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 from database import init_db, get_db, User, Policy
 import routers.quotes as quotes
+import routers.contacts as contacts
 
 app = FastAPI(title="DC Broker API", description="Backend API per la ristrutturazione del sito DC Broker")
 
@@ -38,6 +39,7 @@ def on_startup():
 
 # Include Routers
 app.include_router(quotes.router)
+app.include_router(contacts.router)
 
 @app.get("/api/health")
 def health_check():

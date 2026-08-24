@@ -51,7 +51,7 @@ header .header-wrap {
 
 nav {
   display: flex;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 nav button {
@@ -61,7 +61,7 @@ nav button {
   font-weight: 700;
   color: var(--gray);
   cursor: pointer;
-  padding: 0.5rem 0;
+  padding: 0.5rem 0.2rem;
   transition: color 0.2s;
 }
 
@@ -128,13 +128,44 @@ nav button:hover, nav button.active {
   transform: translateY(-2px);
 }
 
-/* Services section */
-.services-section h2 {
+/* Section styling */
+.section-title {
   font-size: 1.8rem;
   text-align: center;
   margin: 3rem 0 1.5rem 0;
 }
 
+/* Statistics Counters */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+  margin: 3rem 0;
+}
+
+.stat-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.stat-number {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.stat-label {
+  font-size: 0.95rem;
+  color: var(--gray);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+/* Grid layout */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -173,6 +204,37 @@ nav button:hover, nav button.active {
   color: var(--gray);
   font-size: 0.95rem;
   line-height: 1.5;
+}
+
+/* Home Categories cards */
+.home-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.category-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  text-align: center;
+  transition: border-color 0.3s;
+}
+
+.category-card:hover {
+  border-color: var(--primary);
+}
+
+.category-card h3 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+
+.category-card p {
+  color: var(--gray);
+  margin-bottom: 1.5rem;
 }
 
 /* Quoting Wizard styling */
@@ -218,6 +280,8 @@ nav button:hover, nav button.active {
   border-radius: 6px;
   font-size: 1rem;
   outline: none;
+  background: var(--white);
+  color: var(--dark);
 }
 
 .form-control:focus {
@@ -385,4 +449,54 @@ nav button:hover, nav button.active {
 
 .social-btn:hover {
   background-color: var(--light-bg);
+}
+
+/* Contact Form Grid Layout */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 3rem;
+  margin: 3rem 0;
+}
+
+.contact-info {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2rem;
+}
+
+.contact-info h3 {
+  margin-bottom: 1rem;
+}
+
+.contact-info p {
+  color: var(--gray);
+  margin-bottom: 1.5rem;
+}
+
+.info-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.info-icon {
+  font-size: 1.5rem;
+}
+
+.contact-form-box {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 2.5rem;
+}
+
+.success-alert {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 1.2rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  font-weight: bold;
 }
