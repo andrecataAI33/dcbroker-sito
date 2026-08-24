@@ -77,13 +77,13 @@ function App() {
           <div className="logo" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('home')}>
             <img src="https://www.dcbroker.it/wp-content/uploads/2022/12/cropped-DC-Broker-logo.png" alt="DC Broker Logo" />
           </div>
-          <div className="nav-container">
-            <nav>
-              <button className={activeTab === 'home' ? 'active' : ''} onClick={() => setActiveTab('home')}>HOME</button>
-              <button className={activeTab === 'privati' ? 'active' : ''} onClick={() => setActiveTab('privati')}>PRIVATI</button>
-              <button className={activeTab === 'aziende' ? 'active' : ''} onClick={() => setActiveTab('aziende')}>AZIENDE</button>
-              <button className={activeTab === 'contatti' ? 'active' : ''} onClick={() => setActiveTab('contatti')}>CONTATTI</button>
-            </nav>
+          <nav>
+            <button className={activeTab === 'home' ? 'active' : ''} onClick={() => setActiveTab('home')}>HOME</button>
+            <button className={activeTab === 'privati' ? 'active' : ''} onClick={() => setActiveTab('privati')}>PRIVATI</button>
+            <button className={activeTab === 'aziende' ? 'active' : ''} onClick={() => setActiveTab('aziende')}>AZIENDE</button>
+            <button className={activeTab === 'contatti' ? 'active' : ''} onClick={() => setActiveTab('contatti')}>CONTATTI</button>
+          </nav>
+          <div className="header-actions">
             <button className="btn-login" onClick={() => setActiveTab('portal')}>Area Riservata</button>
           </div>
         </div>

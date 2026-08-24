@@ -46,20 +46,23 @@ header .header-wrap {
   align-items: center;
 }
 
+.logo {
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+}
+
 .logo img {
   height: 48px;
   display: block;
-}
-
-.nav-container {
-  display: flex;
-  align-items: center;
-  gap: 2.5rem;
+  mix-blend-mode: multiply; /* Rende trasparente lo sfondo bianco del logo */
 }
 
 nav {
   display: flex;
   gap: 1.5rem;
+  flex: 2;
+  justify-content: center;
 }
 
 nav button {
@@ -76,6 +79,12 @@ nav button {
 
 nav button:hover, nav button.active {
   color: var(--primary);
+}
+
+.header-actions {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .btn-login {
