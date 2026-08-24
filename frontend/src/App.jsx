@@ -96,6 +96,9 @@ function App() {
   const [policies, setPolicies] = useState([])
   const [loadingPolicies, setLoadingPolicies] = useState(false)
 
+  // Interactive Hero Preview states
+  const [heroCategory, setHeroCategory] = useState('aziende') // aziende | automotive | privati
+
   // Wizard state (Aziende - CyberRisk)
   const [wizardStep, setWizardStep] = useState(1)
   const [companyName, setCompanyName] = useState('')
@@ -270,11 +273,76 @@ function App() {
         {activeTab === 'home' && (
           <div>
             <div class="hero">
-              <h1>Crea il tuo futuro con: <br /><span>DC Broker</span></h1>
-              <p>Siamo la migliore soluzione possibile per lo sviluppo del tuo business o per le tue necessità personali in considerazione dell'esperienza maturata in questi anni.</p>
-              <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center' }}>
-                <button class="btn-primary" onClick={() => setActiveTab('portal')}>LE TUE POLIZZE</button>
-                <button class="btn-secondary" onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+              <div class="hero-left">
+                <div class="hero-pills">
+                  <button class={`hero-pill ${heroCategory === 'aziende' ? 'active' : ''}`} onClick={() => setHeroCategory('aziende')}>Aziende</button>
+                  <button class={`hero-pill ${heroCategory === 'automotive' ? 'active' : ''}`} onClick={() => setHeroCategory('automotive')}>Automotive</button>
+                  <button class={`hero-pill ${heroCategory === 'privati' ? 'active' : ''}`} onClick={() => setHeroCategory('privati')}>Privati</button>
+                </div>
+                <h1>Crea il tuo futuro con: <br /><span>DC Broker</span></h1>
+                <p>Siamo la migliore soluzione possibile per lo sviluppo del tuo business o per le tue necessità personali in considerazione dell'esperienza maturata in questi anni.</p>
+                <div style={{ display: 'flex', gap: '1.5rem' }}>
+                  <button class="btn-primary" onClick={() => setActiveTab('portal')}>LE TUE POLIZZE</button>
+                  <button class="btn-secondary" onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
+                </div>
+              </div>
+
+              <div class="hero-right">
+                {/* Floating dynamic badges */}
+                <div class="floating-badge badge-1">
+                  <span>🛡️</span>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 'normal' }}>Brokeraggio</div>
+                    <div>100% Indipendente</div>
+                  </div>
+                </div>
+
+                <div class="floating-badge badge-2">
+                  <span>⭐</span>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 'normal' }}>Valutazione Clienti</div>
+                    <div>Rating 4.9/5</div>
+                  </div>
+                </div>
+
+                {/* Glassmorphic digital insurance card mockup */}
+                <div class="hero-preview-card">
+                  <div class="card-header-glow">
+                    <div class="pulse-container">
+                      <div class="pulse-dot-wrap">
+                        <div class="pulse-dot-ping"></div>
+                      </div>
+                      <span>Copertura Attiva</span>
+                    </div>
+                    <span style={{ fontSize: '1.2rem', fontWeight: '900', color: 'var(--primary)' }}>DC</span>
+                  </div>
+
+                  <div class="card-chip"></div>
+
+                  <div style={{ margin: '2.5rem 0 1.5rem 0' }}>
+                    <div style={{ fontSize: '0.8rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Categoria Selezionata</div>
+                    <div style={{ fontSize: '1.4rem', fontWeight: '900', marginTop: '0.2rem' }}>
+                      {heroCategory === 'aziende' && 'Corporate Shield Card'}
+                      {heroCategory === 'automotive' && 'Fleet Safe Card'}
+                      {heroCategory === 'privati' && 'Personal Life Card'}
+                    </div>
+                    <div style={{ fontSize: '0.9rem', color: '#cbd5e1', marginTop: '0.5rem' }}>
+                      {heroCategory === 'aziende' && 'Incendio, Responsabilità & Cyber'}
+                      {heroCategory === 'automotive' && 'Flotte, Auto, Moto & Dealer'}
+                      {heroCategory === 'privati' && 'Famiglia, Infortuni, Salute & Casa'}
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '2rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '1rem' }}>
+                    <div>
+                      <div style={{ fontSize: '0.7rem', color: '#94a3b8' }}>ID CLIENTE</div>
+                      <div style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>DC-2026-889</div>
+                    </div>
+                    <button class="btn-primary" style={{ padding: '0.4rem 1rem', fontSize: '0.8rem', borderRadius: '6px' }} onClick={() => setActiveTab(heroCategory)}>
+                      SCOPRI
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -417,9 +485,23 @@ function App() {
         {activeTab === 'aziende' && (
           <div>
             <div class="hero">
-              <h1>Aziende</h1>
-              <p>Forniremo consulenze dettagliate e mirate attraverso un modello di business semplice ma al passo con la continua evoluzione del mercato e del prodotto, garantendo la tutela del cliente pre e post contrattuale.</p>
-              <button class="btn-primary" onClick={() => setWizardStep(2)}>Calcola Preventivo CyberRisk</button>
+              <div class="hero-left">
+                <h1>Aziende</h1>
+                <p>Forniremo consulenze dettagliate e mirate attraverso un modello di business semplice ma al passo con la continua evoluzione del mercato e del prodotto, garantendo la tutela del cliente pre e post contrattuale.</p>
+                <button class="btn-primary" onClick={() => setWizardStep(2)}>Calcola Preventivo CyberRisk</button>
+              </div>
+              <div class="hero-right">
+                <div class="hero-preview-card" style={{ transform: 'none' }}>
+                  <div class="card-header-glow">
+                    <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 'bold' }}>SHIELD LEVEL ACTIVE</span>
+                  </div>
+                  <div style={{ margin: '2rem 0 1rem 0' }}>
+                    <h3 style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Tutela PMI Cyber</h3>
+                    <p style={{ color: '#94a3b8' }}>Include copertura riscatto, forensics e ripristino sistemi d'ufficio.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%' }} onClick={() => setWizardStep(2)}>PROVA PREVENTIVATORE</button>
+                </div>
+              </div>
             </div>
 
             {wizardStep === 1 ? (
@@ -486,7 +568,7 @@ function App() {
                     <div class="card-body">
                       <div class="card-icon-box"><ScaleIcon /></div>
                       <h3>Cauzioni e Fideiussioni</h3>
-                      <p>DC Broker ha le competenze necessarie per aiutare la tua azienda verso l'apertura a nuovi mercati dove existe la necessità del rilascio di garanzie fidejussorie e creditizie.</p>
+                      <p>DC Broker ha le competenze necessarie per aiutare la tua azienda verso l'apertura a nuovi mercati dove esiste la necessità del rilascio di garanzie fidejussorie e creditizie.</p>
                     </div>
                     <button class="btn-primary" style={{ width: '100%', padding: '0.7rem' }} onClick={() => setActiveTab('contatti')}>CONTATTACI</button>
                   </div>
@@ -602,9 +684,23 @@ function App() {
         {activeTab === 'privati' && (
           <div>
             <div class="hero">
-              <h1>Persona e Famiglia</h1>
-              <p>Il cliente è il nostro più grande valore. Diamo ai nostri clienti un'assistenza e una tutela costanti. Offriamo soluzioni assicurative pensate sulle vostre esigenze .</p>
-              <button class="btn-primary" onClick={() => setActiveTab('contatti')}>Richiedi Consulenza</button>
+              <div class="hero-left">
+                <h1>Persona e Famiglia</h1>
+                <p>Il cliente è il nostro più grande valore. Diamo ai nostri clienti un'assistenza e una tutela costanti. Offriamo soluzioni assicurative pensate sulle vostre esigenze .</p>
+                <button class="btn-primary" onClick={() => setActiveTab('contatti')}>Richiedi Consulenza</button>
+              </div>
+              <div class="hero-right">
+                <div class="hero-preview-card" style={{ transform: 'none' }}>
+                  <div class="card-header-glow">
+                    <span style={{ fontSize: '0.8rem', color: 'var(--success)', fontWeight: 'bold' }}>FAMILY LIFE PROTECTED</span>
+                  </div>
+                  <div style={{ margin: '2rem 0 1rem 0' }}>
+                    <h3 style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Global Casa</h3>
+                    <p style={{ color: '#94a3b8' }}>Tutela da terremoti, allagamenti e RC capofamiglia in un unico pacchetto.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%' }} onClick={() => setActiveTab('contatti')}>RICHIEDI INFO</button>
+                </div>
+              </div>
             </div>
 
             <h2 class="section-title">Soluzioni per Persona e Famiglia</h2>
@@ -665,9 +761,23 @@ function App() {
         {activeTab === 'automotive' && (
           <div>
             <div class="hero">
-              <h1>Automotive</h1>
-              <p>Trattando con le primarie compagnie di Assicurazione operanti in Italia offriamo le soluzioni migliori sul mercato e garantiamo un risparmio sulla spesa assicurativa. Il nostro scopo è quello di individuare il miglior prodotto per ogni singolo cliente, ricambiamo la vostra fiducia rimanendo sempre al vostro fianco.</p>
-              <button class="btn-primary" onClick={() => setActiveTab('contatti')}>Contatta un Esperto</button>
+              <div class="hero-left">
+                <h1>Automotive</h1>
+                <p>Trattando con le primarie compagnie di Assicurazione operanti in Italia offriamo le soluzioni migliori sul mercato e garantiamo un risparmio sulla spesa assicurativa. Il nostro scopo è quello di individuare il miglior prodotto per ogni singolo cliente, ricambiamo la vostra fiducia rimanendo sempre al vostro fianco.</p>
+                <button class="btn-primary" onClick={() => setActiveTab('contatti')}>Contatta un Esperto</button>
+              </div>
+              <div class="hero-right">
+                <div class="hero-preview-card" style={{ transform: 'none' }}>
+                  <div class="card-header-glow">
+                    <span style={{ fontSize: '0.8rem', color: 'var(--primary)', fontWeight: 'bold' }}>AUTO &amp; FLEET INTEGRATION</span>
+                  </div>
+                  <div style={{ margin: '2rem 0 1rem 0' }}>
+                    <h3 style={{ color: '#fff', fontSize: '1.5rem', marginBottom: '0.5rem' }}>Assicurazioni Flotte</h3>
+                    <p style={{ color: '#94a3b8' }}>Ottimizzazione dei costi per veicoli commerciali e aziendali.</p>
+                  </div>
+                  <button class="btn-primary" style={{ width: '100%' }} onClick={() => setActiveTab('contatti')}>INFO FLOTTE</button>
+                </div>
+              </div>
             </div>
 
             <h2 class="section-title">Coperture Settore Automotive</h2>
