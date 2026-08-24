@@ -282,7 +282,7 @@ function App() {
             {!isLoggedIn ? (
               <div class="auth-card">
                 <h2>Accesso Portale Aziende</h2>
-                <p style={{ color: var(--gray), marginBottom: '2rem' }}>Usa il login sicuro per accedere alla tua area riservata.</p>
+                <p style={{ color: 'var(--gray)', marginBottom: '2rem' }}>Usa il login sicuro per accedere alla tua area riservata.</p>
                 
                 <button class="social-btn" onClick={handleGoogleLogin}>
                   <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18" height="18" alt="Google Logo" />
