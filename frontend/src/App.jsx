@@ -103,6 +103,12 @@ function App() {
   const [contactSuccess, setContactSuccess] = useState(false)
   const [contactSubmitting, setContactSubmitting] = useState(false)
 
+  // Admin State
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false)
+  const [adminPassword, setAdminPassword] = useState('')
+  const [adminContacts, setAdminContacts] = useState([])
+  const [adminError, setAdminError] = useState('')
+
   const openContactModal = (subject = 'Richiesta Informazioni Generica') => {
     setModalSubject(subject)
     setContactSuccess(false)
@@ -155,6 +161,26 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false)
     setUserEmail('')
+  }
+
+  const handleAdminLogin = (e) => {
+    e.preventDefault()
+    if (adminPassword === 'dcbroker2026') {
+      setIsAdminLoggedIn(true)
+      setAdminError('')
+      fetchContacts()
+    } else {
+      setAdminError('Password errata')
+    }
+  }
+
+  const fetchContacts = () => {
+    fetch('http://localhost:8000/api/contacts', {
+      headers: { 'x-admin-token': 'dcbroker-admin' }
+    })
+    .then(res => res.json())
+    .then(data => setAdminContacts(data))
+    .catch(err => console.error("Errore fetch contatti", err))
   }
 
   // FAQ Dati

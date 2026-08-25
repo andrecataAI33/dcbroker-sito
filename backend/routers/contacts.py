@@ -1,7 +1,8 @@
-from fastapi import APIRouter, Depends, HTTPException
-from pydantic import BaseModel, Field, EmailStr
+from fastapi import APIRouter, Depends, HTTPException, Header
+from pydantic import BaseModel, Field
 from sqlalchemy.orm import Session
 from database import get_db, ContactRequest
+from datetime import datetime
 
 router = APIRouter(prefix="/api/contacts", tags=["contacts"])
 
@@ -16,8 +17,13 @@ class ContactResponse(BaseModel):
     id: int
     name: str
     email: str
+    phone: str | None
     subject: str
     message: str
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
 
 @router.post("", response_model=ContactResponse)
 def create_contact_request(contact: ContactCreate, db: Session = Depends(get_db)):
@@ -37,3 +43,13 @@ def create_contact_request(contact: ContactCreate, db: Session = Depends(get_db)
     db.refresh(db_request)
     
     return db_request
+
+@router.get("", response_model=list[ContactResponse])
+def get_all_contacts(
+    db: Session = Depends(get_db),
+    x_admin_token: str | None = Header(default=None)
+):
+    if x_admin_token != "dcbroker-admin":
+        raise HTTPException(status_code=401, detail="Non autorizzato")
+    
+    return db.query(ContactRequest).order_by(ContactRequest.created_at.desc()).all()
