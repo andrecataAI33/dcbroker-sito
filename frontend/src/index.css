@@ -55,7 +55,7 @@ header .header-wrap {
 .logo img {
   height: 48px;
   display: block;
-  mix-blend-mode: multiply; /* Rende trasparente lo sfondo bianco del logo */
+  mix-blend-mode: multiply;
 }
 
 nav {
@@ -151,6 +151,7 @@ nav button:hover, nav button.active {
 
 .btn-pill:hover {
   background-color: #f8fafc;
+  transform: translateY(-2px);
 }
 
 .btn-pill-outline {
@@ -168,6 +169,7 @@ nav button:hover, nav button.active {
 .btn-pill-outline:hover {
   border-color: var(--white);
   background-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
 }
 
 /* Section styling */
@@ -224,19 +226,31 @@ nav button:hover, nav button.active {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.08);
+}
+
+/* Image Zoom on Hover Effect */
+.card-img-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background-color: var(--border);
 }
 
 .card-img {
   width: 100%;
-  aspect-ratio: 16 / 9;
+  height: 100%;
   object-fit: cover;
-  background-color: var(--border);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover .card-img {
+  transform: scale(1.08);
 }
 
 .card-body {
@@ -287,6 +301,154 @@ nav button:hover, nav button.active {
   color: var(--white);
   border-color: var(--dark);
 }
+
+/* Scroll Reveal Animations */
+.reveal-hidden {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Timeline: "Come Lavoriamo" */
+.timeline-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.timeline-step {
+  position: relative;
+  padding: 2rem;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.timeline-step:hover {
+  transform: translateY(-5px);
+  border-color: var(--primary);
+}
+
+.timeline-number {
+  width: 50px;
+  height: 50px;
+  background: var(--light-bg);
+  color: var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Testimonials Carousel */
+.testimonial-container {
+  background: var(--dark-bg);
+  color: var(--white);
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.testimonial-wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  position: relative;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.testimonial-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.8s ease;
+  pointer-events: none;
+}
+
+.testimonial-item.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+  position: relative;
+}
+
+.testimonial-quote {
+  font-size: 1.5rem;
+  font-style: italic;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.testimonial-author {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+/* FAQ Accordion */
+.faq-container {
+  max-width: 800px;
+  margin: 4rem auto 0 auto;
+}
+
+.faq-item {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 0.5rem;
+}
+
+.faq-question {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 1.5rem 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.faq-icon {
+  color: var(--primary);
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.faq-icon.open {
+  transform: rotate(45deg);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, padding 0.4s ease;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+.faq-answer.open {
+  max-height: 300px;
+  padding-bottom: 1.5rem;
+}
+
 
 /* Modal Styling */
 .modal-overlay {
@@ -392,7 +554,6 @@ footer {
   background-color: var(--dark-bg);
   color: var(--white);
   padding: 4rem 0 2rem 0;
-  margin-top: 4rem;
 }
 
 .footer-grid {
