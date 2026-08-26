@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react'
+import { supabase } from './supabaseClient'
 
 // 1. Componente per l'animazione allo scroll (Fade & Slide-up)
 const Reveal = ({ children, delay = 0 }) => {
@@ -90,9 +91,18 @@ const TestimonialCarousel = () => {
 function App() {
   const [activeTab, setActiveTab] = useState('home')
   const [aziendeCategory, setAziendeCategory] = useState('professionali')
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userEmail, setUserEmail] = useState('')
   
+  // Auth State
+  const [session, setSession] = useState(null)
+  const [authEmail, setAuthEmail] = useState('')
+  const [authPassword, setAuthPassword] = useState('')
+  const [authLoading, setAuthLoading] = useState(false)
+  const [authError, setAuthError] = useState('')
+  const [isSignUp, setIsSignUp] = useState(false)
+  
+  // User Data State
+  const [userPolicies, setUserPolicies] = useState([])
+
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalSubject, setModalSubject] = useState('')
@@ -109,58 +119,107 @@ function App() {
   const [adminContacts, setAdminContacts] = useState([])
   const [adminError, setAdminError] = useState('')
 
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+      if (session) fetchUserPolicies(session.user.id)
+    })
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+      if (session) {
+        fetchUserPolicies(session.user.id)
+      } else {
+        setUserPolicies([])
+      }
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
+
+  const fetchUserPolicies = async (userId) => {
+    const { data, error } = await supabase
+      .from('user_policies')
+      .select('*')
+      .eq('user_id', userId)
+
+    if (error) {
+      console.error('Errore fetch polizze:', error)
+    } else {
+      setUserPolicies(data || [])
+    }
+  }
+
+  const handleAuth = async (e) => {
+    e.preventDefault()
+    setAuthLoading(true)
+    setAuthError('')
+
+    let error;
+    if (isSignUp) {
+      const { error: signUpError } = await supabase.auth.signUp({
+        email: authEmail,
+        password: authPassword,
+      })
+      error = signUpError
+      if (!error) {
+        setAuthError('Controlla la tua email per confermare la registrazione!')
+      }
+    } else {
+      const { error: signInError } = await supabase.auth.signInWithPassword({
+        email: authEmail,
+        password: authPassword,
+      })
+      error = signInError
+    }
+
+    if (error) setAuthError(error.message)
+    setAuthLoading(false)
+  }
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut()
+    setAuthEmail('')
+    setAuthPassword('')
+  }
+
   const openContactModal = (subject = 'Richiesta Informazioni Generica') => {
     setModalSubject(subject)
     setContactSuccess(false)
     setIsModalOpen(true)
   }
 
-  const handleContactSubmit = (e) => {
+  const handleContactSubmit = async (e) => {
     e.preventDefault()
     setContactSubmitting(true)
 
-    const payload = {
-      name: contactName,
-      email: contactEmail,
-      phone: contactPhone || null,
-      subject: modalSubject,
-      message: contactMessage
+    const { data, error } = await supabase
+      .from('contact_requests')
+      .insert([
+        { 
+          name: contactName, 
+          email: contactEmail, 
+          phone: contactPhone || null, 
+          subject: modalSubject, 
+          message: contactMessage 
+        }
+      ])
+
+    if (error) {
+      console.error("Errore salvataggio contatto:", error)
+      setContactSuccess(false)
+      setContactSubmitting(false)
+    } else {
+      setContactSuccess(true)
+      setContactName('')
+      setContactEmail('')
+      setContactPhone('')
+      setContactMessage('')
+      setContactSubmitting(false)
+      setTimeout(() => setIsModalOpen(false), 3000)
     }
-
-    fetch('http://localhost:8000/api/contacts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
-    })
-      .then(res => {
-        if (!res.ok) throw new Error('Errore invio')
-        return res.json()
-      })
-      .then(() => {
-        setContactSuccess(true)
-        setContactName('')
-        setContactEmail('')
-        setContactPhone('')
-        setContactMessage('')
-        setContactSubmitting(false)
-        setTimeout(() => setIsModalOpen(false), 3000)
-      })
-      .catch(err => {
-        console.error(err)
-        setContactSuccess(true)
-        setContactSubmitting(false)
-        setTimeout(() => setIsModalOpen(false), 3000)
-      })
-  }
-
-  const handleGoogleLogin = () => {
-    setUserEmail('azienda.cliente@gmail.com')
-    setIsLoggedIn(true)
-  }
-
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setUserEmail('')
   }
 
   const handleAdminLogin = (e) => {
@@ -174,13 +233,17 @@ function App() {
     }
   }
 
-  const fetchContacts = () => {
-    fetch('http://localhost:8000/api/contacts', {
-      headers: { 'x-admin-token': 'dcbroker-admin' }
-    })
-    .then(res => res.json())
-    .then(data => setAdminContacts(data))
-    .catch(err => console.error("Errore fetch contatti", err))
+  const fetchContacts = async () => {
+    const { data, error } = await supabase
+      .from('contact_requests')
+      .select('*')
+      .order('created_at', { ascending: false })
+
+    if (error) {
+      console.error("Errore fetch contatti", error)
+    } else {
+      setAdminContacts(data || [])
+    }
   }
 
   // FAQ Dati
@@ -259,7 +322,6 @@ function App() {
               </Reveal>
 
               <Reveal>
-                {/* Nuova Sezione: Come Lavoriamo (Timeline) */}
                 <h2 className="section-title" style={{ textAlign: 'center', marginTop: '2rem' }}>Il Nostro Metodo</h2>
                 <p style={{ textAlign: 'center', color: 'var(--gray)', marginBottom: '3rem' }}>Trasparenza, velocità e competenza. Ecco come ti proteggiamo.</p>
                 <div className="timeline-grid">
@@ -308,7 +370,6 @@ function App() {
               </Reveal>
             </div>
             
-            {/* Nuova Sezione Recensioni */}
             <TestimonialCarousel />
           </div>
         )}
@@ -702,54 +763,184 @@ function App() {
           </div>
         )}
 
-        {/* Area Riservata (Mock Login) */}
+        {/* Area Riservata (Supabase Auth) */}
         {activeTab === 'portal' && (
           <div className="container section">
             <Reveal>
-              {!isLoggedIn ? (
+              {!session ? (
                 <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center', background: 'var(--white)', padding: '3rem', border: '1px solid var(--border)', borderRadius: '12px' }}>
                   <h2>Area Riservata</h2>
-                  <p style={{ color: 'var(--gray)', margin: '1rem 0 2rem 0' }}>Accedi per gestire le tue polizze e i sinistri.</p>
-                  <button className="btn-flat" onClick={handleGoogleLogin} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18" alt="Google" />
-                    Accedi con Google
-                  </button>
+                  <p style={{ color: 'var(--gray)', margin: '1rem 0 2rem 0' }}>
+                    {isSignUp ? 'Crea un account per gestire le tue polizze.' : 'Accedi per gestire le tue polizze e i sinistri.'}
+                  </p>
+                  
+                  <form onSubmit={handleAuth}>
+                    <div className="form-group">
+                      <input 
+                        type="email" 
+                        className="form-control" 
+                        placeholder="La tua email" 
+                        value={authEmail} 
+                        onChange={e => setAuthEmail(e.target.value)} 
+                        required 
+                      />
+                    </div>
+                    <div className="form-group">
+                      <input 
+                        type="password" 
+                        className="form-control" 
+                        placeholder="Password" 
+                        value={authPassword} 
+                        onChange={e => setAuthPassword(e.target.value)} 
+                        required 
+                      />
+                    </div>
+                    {authError && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '1rem' }}>{authError}</p>}
+                    
+                    <button type="submit" className="btn-login" style={{ width: '100%', borderRadius: '6px' }} disabled={authLoading}>
+                      {authLoading ? 'Attendere...' : (isSignUp ? 'Registrati' : 'Accedi')}
+                    </button>
+                  </form>
+                  
+                  <div style={{ marginTop: '1.5rem' }}>
+                    <button className="btn-flat" onClick={() => { setIsSignUp(!isSignUp); setAuthError(''); }} style={{ fontSize: '0.9rem' }}>
+                      {isSignUp ? 'Hai già un account? Accedi' : 'Non hai un account? Registrati'}
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '12px', padding: '3rem' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
                     <div>
-                      <h3>Benvenuto, {userEmail}</h3>
+                      <h3>Benvenuto, {session.user.email}</h3>
                       <p style={{ color: 'var(--gray)' }}>Le tue polizze attive</p>
                     </div>
                     <button className="btn-flat" style={{ width: 'auto', color: 'red' }} onClick={handleLogout}>Logout</button>
                   </div>
-                  <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
-                    <thead>
-                      <tr style={{ borderBottom: '1px solid var(--border)' }}>
-                        <th style={{ padding: '1rem' }}>Polizza</th>
-                        <th style={{ padding: '1rem' }}>Premio Annuo</th>
-                        <th style={{ padding: '1rem' }}>Stato</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}><strong>Polizza CyberRisk PMI</strong></td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}>450.00 €</td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}><span style={{ background: '#dcfce7', color: '#166534', padding: '0.3rem 0.6rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold' }}>Attiva</span></td>
-                      </tr>
-                      <tr>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}><strong>Polizza D&O Amministratori</strong></td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}>800.00 €</td>
-                        <td style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}><span style={{ background: '#dcfce7', color: '#166534', padding: '0.3rem 0.6rem', borderRadius: '20px', fontSize: '0.8rem', fontWeight: 'bold' }}>Attiva</span></td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  
+                  {userPolicies.length === 0 ? (
+                    <div style={{ textAlign: 'center', padding: '2rem', color: 'var(--gray)' }}>
+                      <p>Non hai ancora nessuna polizza collegata al tuo account.</p>
+                      <p style={{ fontSize: '0.9rem', marginTop: '0.5rem' }}>Se hai stipulato una polizza con noi, verrà inserita a breve dai nostri consulenti.</p>
+                    </div>
+                  ) : (
+                    <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+                      <thead>
+                        <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                          <th style={{ padding: '1rem' }}>Polizza</th>
+                          <th style={{ padding: '1rem' }}>Premio</th>
+                          <th style={{ padding: '1rem' }}>Scadenza</th>
+                          <th style={{ padding: '1rem' }}>Stato</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {userPolicies.map((policy) => (
+                          <tr key={policy.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                            <td style={{ padding: '1rem' }}><strong>{policy.policy_name}</strong></td>
+                            <td style={{ padding: '1rem' }}>€ {policy.premium}</td>
+                            <td style={{ padding: '1rem' }}>{new Date(policy.expiration_date).toLocaleDateString('it-IT')}</td>
+                            <td style={{ padding: '1rem' }}>
+                              <span style={{ 
+                                background: policy.status === 'Attiva' ? '#dcfce7' : '#fee2e2', 
+                                color: policy.status === 'Attiva' ? '#166534' : '#991b1b', 
+                                padding: '0.3rem 0.6rem', 
+                                borderRadius: '20px', 
+                                fontSize: '0.8rem', 
+                                fontWeight: 'bold' 
+                              }}>
+                                {policy.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  )}
                 </div>
               )}
             </Reveal>
           </div>
         )}
+
+        {/* Area Admin (CRM) */}
+        {activeTab === 'admin' && (
+          <div className="container section">
+            <Reveal>
+              {!isAdminLoggedIn ? (
+                <div style={{ maxWidth: '400px', margin: '0 auto', textAlign: 'center', background: 'var(--white)', padding: '3rem', border: '1px solid var(--border)', borderRadius: '12px' }}>
+                  <h2>Admin Login</h2>
+                  <p style={{ color: 'var(--gray)', margin: '1rem 0 2rem 0' }}>Inserisci la password di amministrazione per accedere al CRM dei contatti.</p>
+                  <form onSubmit={handleAdminLogin}>
+                    <div className="form-group">
+                      <input 
+                        type="password" 
+                        className="form-control" 
+                        value={adminPassword} 
+                        onChange={e => setAdminPassword(e.target.value)} 
+                        placeholder="Password..."
+                        required 
+                      />
+                    </div>
+                    {adminError && <p style={{ color: 'red', fontSize: '0.85rem', marginBottom: '1rem' }}>{adminError}</p>}
+                    <button type="submit" className="btn-login" style={{ width: '100%', borderRadius: '6px' }}>Accedi</button>
+                  </form>
+                </div>
+              ) : (
+                <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '12px', padding: '3rem' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem', borderBottom: '1px solid var(--border)', paddingBottom: '1rem' }}>
+                    <div>
+                      <h2>Dashboard Contatti</h2>
+                      <p style={{ color: 'var(--gray)' }}>Elenco delle richieste ricevute dal sito web</p>
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                      <button className="btn-flat" style={{ width: 'auto' }} onClick={fetchContacts}>Aggiorna</button>
+                      <button className="btn-flat" style={{ width: 'auto', color: 'red' }} onClick={() => { setIsAdminLoggedIn(false); setAdminPassword(''); setAdminContacts([]); }}>Logout</button>
+                    </div>
+                  </div>
+                  
+                  {adminContacts.length === 0 ? (
+                    <p style={{ color: 'var(--gray)', textAlign: 'center', padding: '2rem 0' }}>Nessuna richiesta di contatto ricevuta.</p>
+                  ) : (
+                    <div style={{ overflowX: 'auto' }}>
+                      <table style={{ width: '100%', textAlign: 'left', borderCollapse: 'collapse' }}>
+                        <thead>
+                          <tr style={{ borderBottom: '1px solid var(--border)' }}>
+                            <th style={{ padding: '1rem' }}>Data</th>
+                            <th style={{ padding: '1rem' }}>Mittente</th>
+                            <th style={{ padding: '1rem' }}>Oggetto</th>
+                            <th style={{ padding: '1rem' }}>Messaggio</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {adminContacts.map((c, i) => (
+                            <tr key={c.id} style={{ borderBottom: '1px solid var(--border)' }}>
+                              <td style={{ padding: '1rem', whiteSpace: 'nowrap', color: 'var(--gray)' }}>
+                                {new Date(c.created_at).toLocaleDateString('it-IT')} <br/>
+                                {new Date(c.created_at).toLocaleTimeString('it-IT', { hour: '2-digit', minute: '2-digit' })}
+                              </td>
+                              <td style={{ padding: '1rem' }}>
+                                <strong>{c.name}</strong><br/>
+                                <a href={`mailto:${c.email}`} style={{ color: 'var(--primary)', textDecoration: 'none' }}>{c.email}</a><br/>
+                                {c.phone && <span style={{ color: 'var(--gray)', fontSize: '0.9rem' }}>{c.phone}</span>}
+                              </td>
+                              <td style={{ padding: '1rem' }}>
+                                <span style={{ background: '#f1f5f9', padding: '0.3rem 0.6rem', borderRadius: '6px', fontSize: '0.85rem', fontWeight: 'bold' }}>{c.subject}</span>
+                              </td>
+                              <td style={{ padding: '1rem', fontSize: '0.95rem' }}>
+                                {c.message}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+                </div>
+              )}
+            </Reveal>
+          </div>
+        )}
+
       </main>
 
       <footer>
@@ -782,6 +973,7 @@ function App() {
                   <li>P.IVA: 12345678901</li>
                   <li>Iscrizione RUI: B000123456</li>
                   <li>Soggetta a vigilanza IVASS</li>
+                  <li style={{ marginTop: '1rem' }}><a href="#" onClick={(e) => { e.preventDefault(); setActiveTab('admin'); }} style={{ fontSize: '0.8rem', opacity: 0.5 }}>Area Admin (CRM)</a></li>
                 </ul>
               </div>
             </div>
