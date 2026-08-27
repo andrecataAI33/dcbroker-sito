@@ -594,3 +594,20 @@ footer {
   color: #64748b;
   font-size: 0.85rem;
 }
+
+/* WIZARD CSS */
+.wizard-content { max-width: 600px; padding: 3rem; }
+.wizard-progress { height: 6px; background: var(--border); border-radius: 10px; margin-bottom: 2rem; overflow: hidden; }
+.wizard-progress-bar { height: 100%; background: var(--primary); transition: width 0.4s ease; }
+.wizard-step { animation: fadeSlideUp 0.5s ease forwards; }
+.wizard-options { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+.wizard-card { background: var(--white); border: 2px solid var(--border); border-radius: 12px; padding: 1.5rem; text-align: center; cursor: pointer; transition: all 0.3s ease; }
+.wizard-card:hover { border-color: var(--primary); transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+.wizard-icon { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
+.wizard-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--dark); }
+.wizard-card p { font-size: 0.85rem; color: var(--gray); }
+.wizard-actions { display: flex; justify-content: space-between; margin-top: 2rem; }
+.slide-left { animation: slideLeft 0.4s ease forwards; }
+@keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes slideLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+

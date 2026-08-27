@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { supabase } from './supabaseClient'
+import QuoteWizard from './QuoteWizard'
 
 // 1. Componente per l'animazione allo scroll (Fade & Slide-up)
 const Reveal = ({ children, delay = 0 }) => {
@@ -102,6 +103,9 @@ function App() {
   
   // User Data State
   const [userPolicies, setUserPolicies] = useState([])
+
+  // Wizard State
+  const [isWizardOpen, setIsWizardOpen] = useState(false)
 
   // Modal State
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -288,8 +292,8 @@ function App() {
                   <h1>Crea il tuo futuro con: <br />DC Broker</h1>
                   <p>Siamo la migliore soluzione possibile per lo sviluppo del tuo business o per le tue necessità personali in considerazione dell'esperienza maturata in questi anni.</p>
                   <div className="hero-buttons">
-                    <button className="btn-pill" onClick={() => openContactModal('Richiesta Contatto dalla Home')}>Contattaci</button>
-                    <button className="btn-pill-outline" onClick={() => setActiveTab('portal')}>Le tue polizze</button>
+                    <button className="btn-pill" onClick={() => setIsWizardOpen(true)}>Calcola Preventivo</button>
+                    <button className="btn-pill-outline" onClick={() => setActiveTab('portal')}>Area Riservata</button>
                   </div>
                 </div>
               </Reveal>
@@ -940,6 +944,9 @@ function App() {
             </Reveal>
           </div>
         )}
+
+        {/* Preventivatore Wizard */}
+        <QuoteWizard isOpen={isWizardOpen} onClose={() => setIsWizardOpen(false)} />
 
       </main>
 
