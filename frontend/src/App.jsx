@@ -143,6 +143,11 @@ function App() {
     return () => subscription.unsubscribe()
   }, [])
 
+  // Scroll to top on tab change
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [activeTab])
+
   const fetchUserPolicies = async (userId) => {
     const { data, error } = await supabase
       .from('user_policies')
