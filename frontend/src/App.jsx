@@ -675,12 +675,20 @@ function App() {
         )}
 
         {activeTab === 'contatti' && (
-          <div className="container section">
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '4rem', marginBottom: '4rem' }}>
-              <Reveal delay={0}>
+          <div className="container section fade-in">
+            <h2 className="section-title">Contattaci o Calcola Preventivo</h2>
+            <p style={{ textAlign: 'center', color: 'var(--gray)', marginBottom: '3rem', maxWidth: '700px', margin: '0 auto 3rem auto' }}>
+              Usa il nostro strumento interattivo qui sotto per ricevere una stima immediata, oppure scegli l'opzione "Altro" per lasciarci un messaggio.
+            </p>
+
+            <div style={{ background: 'var(--white)', padding: '2rem', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
+              <QuoteWizard isInline={true} isOpen={true} />
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+              <Reveal delay={150}>
                 <div>
-                  <h2 className="section-title">Sede e Recapiti</h2>
-                  <p style={{ color: 'var(--gray)', marginBottom: '2rem' }}>Per richieste commerciali, check-up di polizze in corso o appuntamenti fisici/digitali presso le nostre sedi.</p>
+                  <h3 style={{ marginBottom: '1.5rem' }}>Sede e Recapiti</h3>
                   <div style={{ marginBottom: '1.5rem' }}>
                     <strong>Sede Operativa</strong>
                     <p style={{ color: 'var(--gray)' }}>Via Roma, 100 - Milano (MI)</p>
@@ -695,31 +703,16 @@ function App() {
                   </div>
                 </div>
               </Reveal>
-              
-              <Reveal delay={150}>
-                <div>
-                  <div style={{ background: 'var(--white)', border: '1px solid var(--border)', borderRadius: '12px', padding: '2rem' }}>
-                    <h3 style={{ marginBottom: '1.5rem' }}>Inviaci un messaggio</h3>
-                    <button className="btn-login" style={{ width: '100%', padding: '1rem', borderRadius: '6px' }} onClick={() => openContactModal('Richiesta Informazioni Generica')}>
-                      Apri Modulo di Contatto
-                    </button>
-                  </div>
+
+              <Reveal delay={300}>
+                <div style={{ background: '#f8fafc', border: '1px solid var(--border)', padding: '2rem', borderRadius: '12px' }}>
+                  <h3 style={{ marginBottom: '1rem' }}>Gestione Reclami</h3>
+                  <p style={{ color: 'var(--gray)', marginBottom: '1rem', fontSize: '0.9rem' }}>
+                    Qualora ritenga che il nostro servizio non sia stato all'altezza, può inoltrare un reclamo formale via PEC all'indirizzo <strong>reclami.dcbroker@pec.it</strong>. Ci impegniamo a rispondere entro 45 giorni.
+                  </p>
                 </div>
               </Reveal>
             </div>
-
-            <Reveal delay={300}>
-              <div style={{ background: '#f8fafc', border: '1px solid var(--border)', padding: '3rem', borderRadius: '12px' }}>
-                <h2 className="section-title" style={{ fontSize: '1.8rem' }}>Gestione Reclami</h2>
-                <div style={{ color: 'var(--gray)' }}>
-                  <p style={{ marginBottom: '1rem' }}>DC Broker pone la massima attenzione alla soddisfazione del cliente. Qualora ritenga che il nostro servizio o quello della compagnia assicurativa non sia stato all'altezza, può presentare un reclamo formale.</p>
-                  <h4 style={{ color: 'var(--dark)', marginTop: '1.5rem', marginBottom: '0.5rem' }}>Modalità di invio</h4>
-                  <p style={{ marginBottom: '1rem' }}>Il reclamo può essere inoltrato in forma scritta via Posta Elettronica Certificata (PEC) all'indirizzo <strong>reclami.dcbroker@pec.it</strong> oppure tramite raccomandata A/R presso la nostra Sede Operativa.</p>
-                  <h4 style={{ color: 'var(--dark)', marginTop: '1.5rem', marginBottom: '0.5rem' }}>Tempistiche e IVASS</h4>
-                  <p>Ci impegniamo a rispondere in modo esaustivo entro <strong>45 giorni</strong> dal ricevimento. Qualora l'esito non fosse soddisfacente, è suo diritto rivolgersi all'IVASS (Istituto per la Vigilanza sulle Assicurazioni) o utilizzare i sistemi alternativi di risoluzione delle controversie.</p>
-                </div>
-              </div>
-            </Reveal>
           </div>
         )}
 
