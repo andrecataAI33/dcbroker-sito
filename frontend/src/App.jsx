@@ -527,7 +527,6 @@ function App() {
                       <h3>RC Professionale</h3>
                       <p>Anche tu, come tutti i professionisti hai necessità di lavorare senza pensieri. DC Broker è specializzata nell'offrirti la protezione di cui hai bisogno.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: RC Professionale')}>Richiedi preventivo</button>
                     </div>
                   </div>
                 </Reveal>
@@ -540,8 +539,7 @@ function App() {
                       <h3>Tutela Legale</h3>
                       <p>La polizza copre le spese di difesa degli interessi di un'azienda, in caso di controversie penali e civili, sia in ambito stragiudiziale che in tribunale.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Tutela Legale')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={300}>
@@ -553,8 +551,7 @@ function App() {
                       <h3>Polizza D&O</h3>
                       <p>Sei un Amministratore, Sindaco, Dirigente di Società? Scegli la Polizza di Responsabilità Civile che assicura chi gestisce situazioni di rischio per l'azienda.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Polizza D&O')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
               </div>
@@ -571,8 +568,7 @@ function App() {
                       <h3>Assicurazione del Credito</h3>
                       <p>L'Assicurazione del Credito aiuta le aziende a salvaguardarsi da eventuali mancati pagamenti da parte di clienti, in Italia o all'estero.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Assicurazione Credito')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={150}>
@@ -584,8 +580,7 @@ function App() {
                       <h3>All Risk Insurance</h3>
                       <p>Con DC Broker puoi stipulare un'assicurazione All Risks, con estensione alla copertura assicurativa per i danni da interruzione dell'attività.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: All Risk Insurance')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={300}>
@@ -597,8 +592,7 @@ function App() {
                       <h3>Energy</h3>
                       <p>DC Broker tramite il proprio Team di esperti in assicurazioni energetiche riesce a supportarti nel cautelarti e minimizzare i rischi nel settore.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Energy')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={450}>
@@ -610,8 +604,7 @@ function App() {
                       <h3>Polizza CyberRisk</h3>
                       <p>Proteggi la tua azienda contro il crimine informatico e le minacce digitali, DC Broker ti propone diverse soluzioni complete e personalizzabili.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Polizza CyberRisk')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
               </div>
@@ -628,8 +621,7 @@ function App() {
                       <h3>Polizze M&A</h3>
                       <p>DC Broker ti guida e ti fornisce soluzioni e strategie integrate per la gestione del rischio aziendale durante operazioni di fusioni e acquisizioni.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Polizze M&A')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={150}>
@@ -641,8 +633,7 @@ function App() {
                       <h3>Cauzioni e Fideiussioni</h3>
                       <p>DC Broker ha le competenze per aiutare la tua azienda verso l'apertura a nuovi mercati dove esiste la necessità del rilascio di garanzie fidejussorie.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Cauzioni e Fideiussioni')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
               </div>
@@ -659,8 +650,7 @@ function App() {
                       <h3>Assicurazioni Flotte Aziendali</h3>
                       <p>Proteggi la tua flotta aziendale con le soluzioni assicurative complete di DC Broker, ottimizzando la gestione dei veicoli e la tutela dei tuoi driver.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Flotte Aziendali')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
                 <Reveal delay={150}>
@@ -672,8 +662,7 @@ function App() {
                       <h3>Progetto Car Dealer</h3>
                       <p>DC BROKER INSURANCE, il brand nato per sviluppare il modello distributivo innovativo dedicato specificamente al settore dei Car Dealer.</p>
                       <div className="card-spacer"></div>
-                      <button className="btn-flat" onClick={() => openContactModal('Richiesta info: Progetto Car Dealer')}>Richiedi preventivo</button>
-                    </div>
+</div>
                   </div>
                 </Reveal>
               </div>
@@ -1000,3 +989,4 @@ function App() {
 }
 
 export default App
+

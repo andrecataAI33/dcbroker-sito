@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { supabase } from './supabaseClient'
 
-const QuoteWizard = ({ isOpen, onClose }) => {
+const QuoteWizard = ({ isOpen, onClose, isInline = false }) => {
   const [step, setStep] = useState(1)
   const [category, setCategory] = useState('')
   const [details, setDetails] = useState({ revenue: '', sector: '', age: '', vehicleValue: '' })
@@ -9,7 +9,7 @@ const QuoteWizard = ({ isOpen, onClose }) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [estimatedPrice, setEstimatedPrice] = useState(null)
 
-  if (!isOpen) return null
+  if (!isOpen && !isInline) return null
 
   const nextStep = () => setStep(s => s + 1)
   const prevStep = () => setStep(s => s - 1)
@@ -79,18 +79,17 @@ const QuoteWizard = ({ isOpen, onClose }) => {
     setDetails({ revenue: '', sector: '', age: '', vehicleValue: '' })
     setLead({ name: '', email: '', phone: '' })
     setEstimatedPrice(null)
-    onClose()
+    if (onClose) onClose()
   }
 
-  return (
-    <div className="modal-overlay" onClick={resetAndClose}>
-      <div className="modal-content wizard-content" onClick={e => e.stopPropagation()}>
-        <button className="modal-close" onClick={resetAndClose}>&times;</button>
-        
-        {/* Progress Bar */}
-        <div className="wizard-progress">
-          <div className="wizard-progress-bar" style={{ width: `${(step / 4) * 100}%` }}></div>
-        </div>
+  const wizardContent = (
+    <div className={`wizard-content ${isInline ? 'wizard-inline' : 'modal-content'}`} onClick={e => e.stopPropagation()} style={isInline ? { maxWidth: '800px', margin: '0 auto', padding: '2rem 0', boxShadow: 'none' } : {}}>
+      {!isInline && <button className="modal-close" onClick={resetAndClose}>&times;</button>}
+      
+      {/* Progress Bar */}
+      <div className="wizard-progress">
+        <div className="wizard-progress-bar" style={{ width: `${(step / 4) * 100}%` }}></div>
+      </div>
 
         {step === 1 && (
           <div className="wizard-step fade-in">
@@ -213,6 +212,15 @@ const QuoteWizard = ({ isOpen, onClose }) => {
         )}
 
       </div>
+  )
+
+  if (isInline) {
+    return wizardContent
+  }
+
+  return (
+    <div className="modal-overlay" onClick={resetAndClose}>
+      {wizardContent}
     </div>
   )
 }
