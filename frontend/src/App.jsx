@@ -676,13 +676,72 @@ function App() {
 
         {activeTab === 'contatti' && (
           <div className="container section fade-in">
-            <h2 className="section-title">Contattaci o Calcola Preventivo</h2>
+            <h2 className="section-title">Contattaci o Richiedi un Preventivo</h2>
             <p style={{ textAlign: 'center', color: 'var(--gray)', marginBottom: '3rem', maxWidth: '700px', margin: '0 auto 3rem auto' }}>
-              Usa il nostro strumento interattivo qui sotto per ricevere una stima immediata, oppure scegli l'opzione "Altro" per lasciarci un messaggio.
+              Seleziona il servizio di tuo interesse dal menu a tendina e lasciaci i tuoi dati. Un nostro consulente ti contatterà al più presto.
             </p>
 
-            <div style={{ background: 'var(--white)', padding: '2rem', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', maxWidth: '900px', margin: '0 auto', marginBottom: '4rem' }}>
-              <QuoteWizard isInline={true} isOpen={true} />
+            <div style={{ background: 'var(--white)', padding: '3rem', borderRadius: '15px', boxShadow: '0 10px 30px rgba(0,0,0,0.05)', maxWidth: '700px', margin: '0 auto', marginBottom: '4rem' }}>
+              {contactSuccess ? (
+                <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                  <span style={{ fontSize: '4rem' }}>✅</span>
+                  <h3 style={{ marginTop: '1rem', color: '#166534' }}>Richiesta Inviata!</h3>
+                  <p style={{ color: 'var(--gray)', marginTop: '0.5rem' }}>Abbiamo ricevuto i tuoi dati. A breve riceverai un'email di conferma e sarai ricontattato.</p>
+                  <button className="btn-login" style={{ marginTop: '2rem' }} onClick={() => setContactSuccess(false)}>Invia un'altra richiesta</button>
+                </div>
+              ) : (
+                <form onSubmit={handleContactSubmit}>
+                  <div className="form-group">
+                    <label>Prodotto / Servizio di interesse *</label>
+                    <select className="form-control" value={modalSubject} onChange={e => setModalSubject(e.target.value)} required>
+                      <option value="">-- Seleziona un'opzione --</option>
+                      <optgroup label="Aziende">
+                        <option value="Preventivo: RC Professionale">RC Professionale</option>
+                        <option value="Preventivo: Tutela Legale">Tutela Legale</option>
+                        <option value="Preventivo: Polizza D&O">Polizza D&O</option>
+                        <option value="Preventivo: Cyber Risk">Cyber Risk</option>
+                        <option value="Preventivo: All Risks">All Risks</option>
+                        <option value="Preventivo: Key Man">Key Man</option>
+                      </optgroup>
+                      <optgroup label="Privati">
+                        <option value="Preventivo: RC Auto / Moto">RC Auto / Moto</option>
+                        <option value="Preventivo: Casa e Famiglia">Casa e Famiglia</option>
+                        <option value="Preventivo: Salute e Benessere">Salute e Benessere</option>
+                      </optgroup>
+                      <optgroup label="Altro">
+                        <option value="Informazioni Generali">Informazioni Generali</option>
+                        <option value="Assistenza Sinistri">Assistenza Sinistri</option>
+                        <option value="Lavora con noi">Lavora con noi</option>
+                      </optgroup>
+                    </select>
+                  </div>
+                  
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                    <div className="form-group">
+                      <label>Nome e Cognome *</label>
+                      <input type="text" className="form-control" value={contactName} onChange={e => setContactName(e.target.value)} placeholder="Mario Rossi" required />
+                    </div>
+                    <div className="form-group">
+                      <label>Telefono</label>
+                      <input type="tel" className="form-control" value={contactPhone} onChange={e => setContactPhone(e.target.value)} placeholder="+39 333 1234567" />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Email *</label>
+                    <input type="email" className="form-control" value={contactEmail} onChange={e => setContactEmail(e.target.value)} placeholder="mario.rossi@email.com" required />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Messaggio (opzionale)</label>
+                    <textarea className="form-control" rows="4" value={contactMessage} onChange={e => setContactMessage(e.target.value)} placeholder="Scrivi qui eventuali dettagli aggiuntivi..."></textarea>
+                  </div>
+
+                  <button type="submit" className="btn-login" style={{ width: '100%', borderRadius: '6px', marginTop: '1rem' }} disabled={contactSubmitting}>
+                    {contactSubmitting ? 'Invio in corso...' : 'Invia Richiesta'}
+                  </button>
+                </form>
+              )}
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
