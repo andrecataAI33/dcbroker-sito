@@ -402,8 +402,7 @@ function App() {
                     <h3>Polizza Vita</h3>
                     <p>L'assicurazione vita garantisce un sostegno economico in caso di morte o infortunio grave di un membro della propria famiglia. Chiedi un preventivo personalizzato.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Polizza Vita')}>Richiedi preventivo Vita</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
@@ -416,8 +415,7 @@ function App() {
                     <h3>Rimborso spese mediche</h3>
                     <p>L'assicurazione rimborso spese mediche, è una polizza che permette di tutelare la propria salute in relazione a patologie sopraggiunte nelle più svariate situazioni.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Rimborso spese mediche')}>Richiedi preventivo Salute</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
@@ -430,8 +428,7 @@ function App() {
                     <h3>Long Term Care</h3>
                     <p>DC Broker ti propone Assicurazione contro il rischio di non autosufficienza a seguito di infortunio, malattia grave o longevità. Richiedi un preventivo.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Long Term Care')}>Richiedi preventivo LTC</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
@@ -444,8 +441,7 @@ function App() {
                     <h3>Polizza Infortuni</h3>
                     <p>La polizza infortuni ha lo scopo di proteggere economicamente la famiglia dagli incidenti più gravi, che potrebbero minare la tranquillità familiare.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Polizza Infortuni')}>Richiedi preventivo Infortuni</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
@@ -458,8 +454,7 @@ function App() {
                     <h3>Polizza Abitazione</h3>
                     <p>La polizza Globale Abitazione di DC Broker ti offre una protezione completa per la tua casa ed alla tua Famiglia con un insieme di garanzie e tutele.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Polizza Abitazione')}>Richiedi preventivo Casa</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
@@ -472,22 +467,20 @@ function App() {
                     <h3>Polizza Viaggi</h3>
                     <p>Indispensabile a chi ha intenzione di raggiungere Paesi molto lontani o a rischio o destinazioni dove le spese sanitarie per eventuali cure mediche, sono molto elevate.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Polizza Viaggi')}>Richiedi preventivo Viaggi</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
 
               <Reveal delay={400}>
                 <div className="card">
                   <div className="card-img-container">
-                    <img src="https://images.unsplash.com/photo-1469811565434-604b9015c328?auto=format&fit=crop&w=600&q=80" alt="Auto e Moto" className="card-img" />
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=600&q=80" alt="Auto e Moto" className="card-img" />
                   </div>
                   <div className="card-body">
                     <h3>Assicurazioni Auto e Moto</h3>
                     <p>Scopri le polizze per la tua auto e la tua moto e le combinazioni di servizi che fanno al caso tuo. Tutela te stesso e il tuo veicolo dagli imprevisti.</p>
                     <div className="card-spacer"></div>
-                    <button className="btn-flat" onClick={() => openContactModal('Preventivo Auto e Moto')}>Richiedi preventivo Motori</button>
-                  </div>
+</div>
                 </div>
               </Reveal>
             </div>
@@ -545,7 +538,7 @@ function App() {
                 <Reveal delay={300}>
                   <div className="card">
                     <div className="card-img-container">
-                      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32d7?auto=format&fit=crop&w=600&q=80" alt="Polizza D&O" className="card-img" />
+                      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?auto=format&fit=crop&w=600&q=80" alt="Polizza D&O" className="card-img" />
                     </div>
                     <div className="card-body">
                       <h3>Polizza D&O</h3>
@@ -656,7 +649,7 @@ function App() {
                 <Reveal delay={150}>
                   <div className="card">
                     <div className="card-img-container">
-                      <img src="https://images.unsplash.com/photo-1563714192534-100f72382902?auto=format&fit=crop&w=600&q=80" alt="Car Dealer" className="card-img" />
+                      <img src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?auto=format&fit=crop&w=600&q=80" alt="Car Dealer" className="card-img" />
                     </div>
                     <div className="card-body">
                       <h3>Progetto Car Dealer</h3>
@@ -1041,4 +1034,6 @@ function App() {
 }
 
 export default App
+
+
 
