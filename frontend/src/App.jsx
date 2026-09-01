@@ -101,6 +101,14 @@ function App() {
   const [authError, setAuthError] = useState('')
   const [isSignUp, setIsSignUp] = useState(false)
   
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  const handleTabChange = (tab) => {
+    setActiveTab(tab)
+    setIsMobileMenuOpen(false) // chiudi il menu quando si clicca
+    window.scrollTo(0, 0)
+  }
+
   // User Data State
   const [userPolicies, setUserPolicies] = useState([])
 
@@ -273,17 +281,28 @@ function App() {
     <div>
       <header>
         <div className="container header-wrap">
-          <div className="logo" style={{ cursor: 'pointer' }} onClick={() => setActiveTab('home')}>
+          <div className="logo" style={{ cursor: 'pointer' }} onClick={() => handleTabChange('home')}>
             <img src="https://www.dcbroker.it/wp-content/uploads/2022/12/cropped-DC-Broker-logo.png" alt="DC Broker Logo" />
           </div>
-          <nav>
-            <button className={activeTab === 'home' ? 'active' : ''} onClick={() => setActiveTab('home')}>HOME</button>
-            <button className={activeTab === 'privati' ? 'active' : ''} onClick={() => setActiveTab('privati')}>PRIVATI</button>
-            <button className={activeTab === 'aziende' ? 'active' : ''} onClick={() => setActiveTab('aziende')}>AZIENDE</button>
-            <button className={activeTab === 'contatti' ? 'active' : ''} onClick={() => setActiveTab('contatti')}>CONTATTI</button>
+          
+          <div className={`mobile-menu-icon ${isMobileMenuOpen ? 'open' : ''}`} onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <nav className={isMobileMenuOpen ? 'nav-open' : ''}>
+            <button className={activeTab === 'home' ? 'active' : ''} onClick={() => handleTabChange('home')}>HOME</button>
+            <button className={activeTab === 'privati' ? 'active' : ''} onClick={() => handleTabChange('privati')}>PRIVATI</button>
+            <button className={activeTab === 'aziende' ? 'active' : ''} onClick={() => handleTabChange('aziende')}>AZIENDE</button>
+            <button className={activeTab === 'contatti' ? 'active' : ''} onClick={() => handleTabChange('contatti')}>CONTATTI</button>
+            <div className="header-actions mobile-only">
+              <button className="btn-login" onClick={() => handleTabChange('portal')} style={{ width: '100%', marginTop: '1rem' }}>Area Riservata</button>
+            </div>
           </nav>
-          <div className="header-actions">
-            <button className="btn-login" onClick={() => setActiveTab('portal')}>Area Riservata</button>
+
+          <div className="header-actions desktop-only">
+            <button className="btn-login" onClick={() => handleTabChange('portal')}>Area Riservata</button>
           </div>
         </div>
       </header>
@@ -538,7 +557,7 @@ function App() {
                 <Reveal delay={300}>
                   <div className="card">
                     <div className="card-img-container">
-                      <img src="https://images.unsplash.com/photo-1556761175-5973dc0f32b7?auto=format&fit=crop&w=600&q=80" alt="Polizza D&O" className="card-img" />
+                      <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" alt="Polizza D&O" className="card-img" />
                     </div>
                     <div className="card-body">
                       <h3>Polizza D&O</h3>
@@ -709,7 +728,7 @@ function App() {
                     </select>
                   </div>
                   
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                  <div className="responsive-grid-small">
                     <div className="form-group">
                       <label>Nome e Cognome *</label>
                       <input type="text" className="form-control" value={contactName} onChange={e => setContactName(e.target.value)} placeholder="Mario Rossi" required />
@@ -737,7 +756,7 @@ function App() {
               )}
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+            <div className="responsive-grid">
               <Reveal delay={150}>
                 <div>
                   <h3 style={{ marginBottom: '1.5rem' }}>Sede e Recapiti</h3>
@@ -1034,6 +1053,8 @@ function App() {
 }
 
 export default App
+
+
 
 
 

@@ -611,3 +611,124 @@ footer {
 @keyframes fadeSlideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideLeft { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
 
+/* MOBILE RESPONSIVE STYLES */
+@media (max-width: 900px) {
+  .header-wrap {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    padding: 1rem 2rem;
+  }
+  
+  .desktop-only {
+    display: none !important;
+  }
+  
+  .mobile-menu-icon {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .mobile-menu-icon span {
+    display: block;
+    height: 3px;
+    width: 100%;
+    background-color: var(--primary);
+    border-radius: 3px;
+    transition: all 0.3s ease;
+  }
+
+  .mobile-menu-icon.open span:nth-child(1) {
+    transform: translateY(9px) rotate(45deg);
+  }
+  .mobile-menu-icon.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .mobile-menu-icon.open span:nth-child(3) {
+    transform: translateY(-9px) rotate(-45deg);
+  }
+
+  nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--white);
+    flex-direction: column;
+    padding: 0;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+    z-index: 999;
+    align-items: center;
+  }
+
+  nav.nav-open {
+    max-height: 500px; /* enough to show all items */
+    padding: 1.5rem 2rem;
+  }
+
+  nav button {
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 901px) {
+  .mobile-menu-icon, .mobile-only {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .hero h1 {
+    font-size: 2.5rem;
+  }
+  
+  .hero-buttons {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .hero-buttons button {
+    width: 100%;
+  }
+  
+  .wizard-inline {
+    padding: 1rem 0 !important;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+.responsive-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+.responsive-grid-small {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 768px) {
+  .responsive-grid, .responsive-grid-small {
+    grid-template-columns: 1fr;
+  }
+}
